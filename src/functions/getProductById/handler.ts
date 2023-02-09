@@ -10,7 +10,7 @@ export const main = async (
     (p) => p.uuid === event.pathParameters.productId
   );
   if (found) {
-    return formatJSONResponse(found);
+    return await Promise.resolve(formatJSONResponse(found));
   }
   return {
     statusCode: 404,
