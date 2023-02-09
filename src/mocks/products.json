@@ -1,99 +1,99 @@
 [
   {
-    "name": "The Witcher 3: Wild Hunt",
+    "title": "The Witcher 3: Wild Hunt",
     "price": 59.99,
-    "uuid": "8d4a4e0f-7f9b-4c3f-8d6e-b6c1a6a2d847",
+    "id": "8d4a4e0f-7f9b-4c3f-8d6e-b6c1a6a2d847",
     "description": "The Witcher 3: Wild Hunt is a story-driven, next-generation open world role-playing game set in a visually stunning fantasy universe full of meaningful choices and impactful consequences.",
     "genre": "Role Playing"
   },
   {
-    "name": "Grand Theft Auto V",
+    "title": "Grand Theft Auto V",
     "price": 29.99,
-    "uuid": "2e3f3c7b-5c5f-4b9a-941e-fc14ea0cfdee",
+    "id": "2e3f3c7b-5c5f-4b9a-941e-fc14ea0cfdee",
     "description": "Grand Theft Auto V is an open world, action-adventure video game developed by Rockstar North and published by Rockstar Games.",
     "genre": "Action Adventure"
   },
   {
-    "name": "Dark Souls III",
+    "title": "Dark Souls III",
     "price": 39.99,
-    "uuid": "78af3ec2-8719-4ca1-8ce1-bf75c7376776",
+    "id": "78af3ec2-8719-4ca1-8ce1-bf75c7376776",
     "description": "Dark Souls III is an action role playing game set in a dark fantasy world. Explore its intricate world design - full of hidden passages, dungeons and secrets - and uncover its deeply rooted lore.",
     "genre": "Action Role Playing"
   },
   {
-    "name": "Fallout 4",
+    "title": "Fallout 4",
     "price": 59.99,
-    "uuid": "b5cf11ad-dfcc-4ef7-9427-ed967059d8bb",
+    "id": "b5cf11ad-dfcc-4ef7-9427-ed967059d8bb",
     "description": "Fallout 4 is an open world action role playing video game developed by Bethesda Game Studios and published by Bethesda Softworks. Set in the post apocalyptic wasteland of Boston Massachusetts the game follows the story of the Sole Survivor as they explore the ruined cityscape looking for their missing son.",
     "genre": "Action Role Playing"
   },
   {
-    "name": "The Elder Scrolls V: Skyrim Special Edition",
+    "title": "The Elder Scrolls V: Skyrim Special Edition",
     "price": 39.99,
-    "uuid": "859f0da3-0846-45ff-bcdd-50d35eaec5aa",
+    "id": "859f0da3-0846-45ff-bcdd-50d35eaec5aa",
     "description": "The Elder Scrolls V Skyrim Special Edition is a remastered version of the award winning RPG set in the epic fantasy world of Tamriel. With improved graphics new features and all of the original content this is the definitive edition of one of the greatest RPGs ever made.",
     "genre": "Role Playing"
   },
   {
-    "name": "Call of Duty®: Black Ops III Zombies Chronicles Edition",
+    "title": "Call of Duty®: Black Ops III Zombies Chronicles Edition",
     "price": 49.99,
-    "uuid": "dc07be09-2463-4b72-8917-926b18a09db1",
+    "id": "dc07be09-2463-4b72-8917-926b18a09db1",
     "description": "Call of Duty® Black Ops III Zombies Chronicles Edition includes the full base game plus the Zombies Chronicles content expansion.",
     "genre": "First Person Shooter"
   },
   {
-    "name": "Destiny 2",
+    "title": "Destiny 2",
     "price": 59.99,
-    "uuid": "d721337a-0090-4422-ba50-34a056fe8020",
+    "id": "d721337a-0090-4422-ba50-34a056fe8020",
     "description": "Destiny 2 is an online multiplayer first person shooter video game developed by Bungie and published by Activision.",
     "genre": "First Person Shooter"
   },
   {
-    "name": "Overwatch® Legendary Edition",
+    "title": "Overwatch® Legendary Edition",
     "price": 39.99,
-    "uuid": "7d25ebaa-1902-4ef2-93a0-c2284e31ba48",
+    "id": "7d25ebaa-1902-4ef2-93a0-c2284e31ba48",
     "description": "Overwatch Legendary Edition is a team based shooter where heroes do battle in a world of conflict.",
     "genre": "First Person Shooter"
   },
   {
-    "name": "Call of Duty: Modern Warfare",
+    "title": "Call of Duty: Modern Warfare",
     "price": 59.99,
-    "uuid": "5f5c9b7f-a1d9-4e45-8c3b-a3ec35e7d6d8",
+    "id": "5f5c9b7f-a1d9-4e45-8c3b-a3ec35e7d6d8",
     "description": "Call of Duty: Modern Warfare is a first-person shooter video game developed by Infinity Ward and published by Activision. It is the sixteenth primary installment in the Call of Duty series.",
     "genre": "First-person shooter"
   },
   {
-    "name": "Minecraft",
+    "title": "Minecraft",
     "price": 19.99,
-    "uuid": "6f086020-e0ea-4764-8111-c17de00b9314",
+    "id": "6f086020-e0ea-4764-8111-c17de00b9314",
     "description": "Minecraft is a sandbox video game developed by Mojang Studios. The game was created by Markus Persson in the Java programming language.",
     "genre": "Sandbox"
   },
   {
-    "name": "The Witcher 3",
+    "title": "The Witcher 3",
     "price": 49.99,
-    "uuid": "87631d09-def5-4bf6-9bb2-45e5fea3818b",
+    "id": "87631d09-def5-4bf6-9bb2-45e5fea3818b",
     "description": "The Witcher 3 is an action role playing game developed and published by CD Projekt RED.",
     "genre": "Action role playing"
   },
   {
-    "name": "God of War (2018)",
+    "title": "God of War (2018)",
     "price": 19.99,
-    "uuid": "7fa53db6-0790-48bb-be35-30dd08cfbe44",
+    "id": "7fa53db6-0790-48bb-be35-30dd08cfbe44",
     "description": "God of War (2018) is a third person action adventure video game developed Santa Monica Studio and published Sony Interactive Entertainment.",
     "genre": "Third person action adventure"
   },
   {
-    "name": "Red Dead Redemption 2",
+    "title": "Red Dead Redemption 2",
     "price": 59.99,
-    "uuid": "75366314-fd96-47fd-9412-dc0690ca6075",
+    "id": "75366314-fd96-47fd-9412-dc0690ca6075",
     "description": "Red Dead Redemption 2 is an open world western themed action adventure video game developed and published Rockstar Games.",
     "genre": "Open world western themed action adventure"
   },
   {
-    "name": "Borderlands 3",
+    "title": "Borderlands 3",
     "price": 59.99,
-    "uuid": "afa17aa5-7077-42ee-ae68-1cc8837ed29d",
+    "id": "afa17aa5-7077-42ee-ae68-1cc8837ed29d",
     "description": "Borderlands 3 is a looter shooter video game developed Gearbox Software and published 2K Games.",
     "genre": "Looter shooter"
   }

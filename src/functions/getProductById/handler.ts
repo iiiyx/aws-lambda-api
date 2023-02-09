@@ -1,13 +1,14 @@
 import { APIGatewayProxyResult, APIGatewayEvent } from "aws-lambda";
 import { formatJSONResponse } from "@libs/api-gateway";
+import { middyfy } from "@libs/lambda";
 
 import productListMock from "../../mocks/products.json";
 
-export const main = async (
+const handler = async (
   event: APIGatewayEvent
 ): Promise<APIGatewayProxyResult> => {
   const found = productListMock.find(
-    (p) => p.uuid === event.pathParameters.productId
+    (p) => p.id === event.pathParameters.productId
   );
   if (found) {
     return await Promise.resolve(formatJSONResponse(found));
@@ -17,3 +18,5 @@ export const main = async (
     body: `Product with id ${event.pathParameters.productId} is not found`,
   };
 };
+
+export const main = middyfy(handler);
