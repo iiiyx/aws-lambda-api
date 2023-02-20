@@ -1,6 +1,7 @@
+import { FunctionType } from "@functions/types";
 import { handlerPath } from "@libs/handler-resolver";
 
-export default {
+const config: FunctionType = {
   handler: `${handlerPath(__dirname)}/handler.main`,
   events: [
     {
@@ -11,3 +12,5 @@ export default {
     },
   ],
 };
+
+export default config;
