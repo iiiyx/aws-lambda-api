@@ -6,7 +6,11 @@
   "scripts": {
     "deploy": "serverless deploy",
     "info": "serverless info",
-    "remove": "serverless remove"
+    "remove": "serverless remove",
+    "test": "jest",
+    "local-get-list": "serverless invoke local -f getProductsList --path src/functions/getProductsList/mockReq.json",
+    "local-get-by-id-200": "serverless invoke local -f getProductById --path src/functions/getProductById/mockGoodReq.json",
+    "local-get-by-id-404": "serverless invoke local -f getProductById --path src/functions/getProductById/mockBadReq.json"
   },
   "engines": {
     "node": ">=14.15.0"
@@ -17,10 +21,16 @@
     "@middy/http-json-body-parser": "^3.4.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.21.0",
+    "@babel/preset-env": "^7.20.2",
+    "@babel/preset-typescript": "^7.21.0",
     "@serverless/typescript": "^3.0.0",
     "@types/aws-lambda": "^8.10.71",
+    "@types/jest": "^29.4.0",
     "@types/node": "^14.14.25",
+    "babel-jest": "^29.4.3",
     "esbuild": "^0.14.11",
+    "jest": "^29.4.3",
     "json-schema-to-ts": "^1.5.0",
     "serverless": "^3.0.0",
     "serverless-esbuild": "^1.23.3",

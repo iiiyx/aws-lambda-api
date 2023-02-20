@@ -21,3 +21,10 @@ export const formatJSONResponse = (
     body: JSON.stringify(response),
   };
 };
+
+export const formatJSONError = (code: number, message: string) => {
+  return {
+    statusCode: code,
+    body: JSON.stringify({ message }),
+  };
+};
