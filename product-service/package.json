@@ -20,7 +20,7 @@
     "@middy/http-cors": "^4.2.3",
     "@middy/http-error-handler": "^4.2.6",
     "@middy/http-json-body-parser": "^3.4.0",
-    "@middy/http-response-serializer": "^4.2.6",
+    "aws-sdk": "^2.1328.0",
     "http-errors": "^2.0.0"
   },
   "devDependencies": {
