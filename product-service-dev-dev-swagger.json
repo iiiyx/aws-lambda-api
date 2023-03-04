@@ -1,0 +1,28 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "version" : "2023-02-09T03:01:25Z",
+    "title" : "product-service-dev"
+  },
+  "host" : "44jfrwkgsl.execute-api.eu-west-1.amazonaws.com",
+  "basePath" : "/dev",
+  "schemes" : [ "https" ],
+  "paths" : {
+    "/products" : {
+      "get" : {
+        "responses" : { }
+      }
+    },
+    "/products/{productId}" : {
+      "get" : {
+        "parameters" : [ {
+          "name" : "productId",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : { }
+      }
+    }
+  }
+}

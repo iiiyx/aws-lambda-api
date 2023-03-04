@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.com/product.schema.json",
+  "title": "Product by ID",
+  "description": "The details of the product",
+  "type": "object",
+  "properties": {
+    "id": {
+      "description": "The UUID of a product",
+      "type": "string"
+    },
+    "count": {
+      "description": "Product's count",
+      "type": "number"
+    },
+    "description": {
+      "description": "Product's description",
+      "type": "string"
+    },
+    "price": {
+      "description": "Product's price",
+      "type": "number"
+    },
+    "title": {
+      "description": "The name of a product",
+      "type": "string"
+    }
+  }
+}
