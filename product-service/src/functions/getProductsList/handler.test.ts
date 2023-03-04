@@ -1,14 +1,16 @@
 import { Context } from "aws-lambda";
+import { environment } from "src/constants";
+import mockProducts from "../../mocks/products.json";
 import { main as handler } from "./handler";
-import productListMock from "../../mocks/products.json";
 
-jest.mock("@libs/lambda");
 describe("Get Products", function () {
+  beforeEach(() => {
+    jest.resetModules();
+    process.env = { ...process.env, ...environment };
+  });
+
   it("verifies successful response", async () => {
     const result = await handler({}, {} as Context);
-    expect(result.statusCode).toEqual(200);
-    const actual = JSON.parse(result.body).map((e) => e.title);
-    const expected = productListMock.map((e) => e.title);
-    expect(actual).toEqual(expected);
+    expect(result).toEqual(mockProducts.map((p) => ({ ...p, count: 100500 })));
   });
 });

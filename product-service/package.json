@@ -18,7 +18,10 @@
   "dependencies": {
     "@middy/core": "^3.4.0",
     "@middy/http-cors": "^4.2.3",
-    "@middy/http-json-body-parser": "^3.4.0"
+    "@middy/http-error-handler": "^4.2.6",
+    "@middy/http-json-body-parser": "^3.4.0",
+    "@middy/http-response-serializer": "^4.2.6",
+    "http-errors": "^2.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.21.0",
@@ -26,6 +29,7 @@
     "@babel/preset-typescript": "^7.21.0",
     "@serverless/typescript": "^3.0.0",
     "@types/aws-lambda": "^8.10.71",
+    "@types/http-errors": "^2.0.1",
     "@types/jest": "^29.4.0",
     "@types/node": "^14.14.25",
     "babel-jest": "^29.4.3",

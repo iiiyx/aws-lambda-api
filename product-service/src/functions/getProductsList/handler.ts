@@ -1,21 +1,39 @@
-import { APIGatewayProxyResult, APIGatewayEvent } from "aws-lambda";
-import { formatJSONResponse } from "@libs/api-gateway";
 import { middyfy } from "@libs/lambda";
+import { APIGatewayEvent } from "aws-lambda";
+import * as AWS from "aws-sdk";
+import { REGION } from "src/constants";
+import { ProductType, ProductWithStockType, StockType } from "src/models";
 
-import productListMock from "@mocks/products.json";
+AWS.config.update({ region: REGION });
+const ddb = new AWS.DynamoDB.DocumentClient();
 
 const handler = async (
   _event: APIGatewayEvent
-): Promise<APIGatewayProxyResult> => {
-  const res = await Promise.resolve(
-    formatJSONResponse(
-      productListMock.map((product, index) => ({
-        ...product,
-        count: index + 1,
-      }))
-    )
-  );
-  return res;
+): Promise<ProductWithStockType[]> => {
+  const productsResponse = await ddb
+    .scan({
+      TableName: process.env.PRODUCTS_TABLE,
+    })
+    .promise();
+  const products = productsResponse.Items as ProductType[];
+
+  const stocksResponse = await ddb
+    .scan({
+      TableName: process.env.STOCKS_TABLE,
+    })
+    .promise();
+  const stocks = stocksResponse.Items as StockType[];
+  const stocksMap = stocks.reduce((acc, item) => {
+    acc[item.product_id] = item.count;
+    return acc;
+  }, {});
+
+  return products.map((p) => {
+    return {
+      ...p,
+      count: stocksMap[p.id] ? stocksMap[p.id] : 0,
+    };
+  });
 };
 
 export const main = middyfy(handler);
