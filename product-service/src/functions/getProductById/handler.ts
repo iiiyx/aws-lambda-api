@@ -20,7 +20,11 @@ const handler = async (
     })
     .promise();
   if (!productResponse.Items?.length) {
-    throw new createError.NotFound(`Product with id '${id}' is not found`);
+    const err = new createError.NotFound(
+      `Product with id '${id}' is not found`
+    );
+    err.expose = true;
+    throw err;
   }
   const product = productResponse.Items[0] as ProductType;
 
