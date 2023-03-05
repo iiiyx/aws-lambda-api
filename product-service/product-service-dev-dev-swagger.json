@@ -1,7 +1,7 @@
 {
   "swagger" : "2.0",
   "info" : {
-    "version" : "2023-02-09T03:01:25Z",
+    "version" : "2023-03-05T01:13:42Z",
     "title" : "product-service-dev"
   },
   "host" : "44jfrwkgsl.execute-api.eu-west-1.amazonaws.com",
@@ -10,6 +10,9 @@
   "paths" : {
     "/products" : {
       "get" : {
+        "responses" : { }
+      },
+      "post" : {
         "responses" : { }
       }
     },
