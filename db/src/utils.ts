@@ -45,26 +45,10 @@ export const logResult = (
   }
 };
 
-export const getFillParams = (
-  tableName: string,
-  items: Array<Record<string, any>>,
-  idKey: string
-) => {
-  const ddb = new AWS.DynamoDB();
-  const requests = items.map((item) => makePutReq(item, idKey));
-  const params: AWS.DynamoDB.BatchWriteItemInput = {
-    RequestItems: {
-      [tableName]: requests,
-    },
-  };
-  ddb.batchWriteItem(params, logResult);
-};
-
 export const sendItems = (reqItems: AWS.DynamoDB.BatchWriteItemRequestMap) => {
   const params: AWS.DynamoDB.BatchWriteItemInput = {
     RequestItems: reqItems,
   };
-  // console.log(JSON.stringify(params, null, 2));
   const ddb = new AWS.DynamoDB();
   ddb.batchWriteItem(params, logResult);
 };
