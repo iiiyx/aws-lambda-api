@@ -10,7 +10,8 @@
     "test": "jest",
     "local-get-list": "serverless invoke local -f getProductsList --path src/functions/getProductsList/mockReq.json",
     "local-get-by-id-200": "serverless invoke local -f getProductById --path src/functions/getProductById/mockGoodReq.json",
-    "local-get-by-id-404": "serverless invoke local -f getProductById --path src/functions/getProductById/mockBadReq.json"
+    "local-get-by-id-404": "serverless invoke local -f getProductById --path src/functions/getProductById/mockBadReq.json",
+    "local-create": "serverless invoke local -f createProduct --path src/functions/createProduct/mockReq.json"
   },
   "engines": {
     "node": ">=14.15.0"
@@ -18,10 +19,9 @@
   "dependencies": {
     "@middy/core": "^3.4.0",
     "@middy/http-cors": "^4.2.3",
-    "@middy/http-error-handler": "^4.2.6",
-    "@middy/http-json-body-parser": "^3.4.0",
     "aws-sdk": "^2.1328.0",
-    "http-errors": "^2.0.0"
+    "http-errors": "^2.0.0",
+    "json-schema-library": "^7.4.7"
   },
   "devDependencies": {
     "@babel/core": "^7.21.0",

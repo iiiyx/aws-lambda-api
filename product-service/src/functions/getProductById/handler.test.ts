@@ -20,6 +20,7 @@ describe("Get Product By ID", function () {
 
     expect(result).toEqual({ ...product, count: 100500 });
   });
+
   it("verifies unsuccessful response", async () => {
     const id = "some-fake-id";
     const event: APIGatewayProxyEvent = {
@@ -32,6 +33,7 @@ describe("Get Product By ID", function () {
       await handler(event, {} as Context);
     } catch (e) {
       expect(e.message).toEqual(`Product with id '${id}' is not found`);
+      expect(e.statusCode).toEqual(404);
       caught = true;
     }
     expect(caught).toBeTruthy();

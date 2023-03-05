@@ -10,17 +10,28 @@ const errorHandler = (): middy.MiddlewareObj<
     APIGatewayProxyEvent,
     APIGatewayProxyResult
   > = async (request): Promise<void> => {
-    if (
-      isHttpError(request.error) &&
-      (request.error as HttpError).statusCode &&
-      request.error.expose
-    ) {
-      return;
+    if (!isHttpError(request.error) || !request.error.statusCode) {
+      request.error = {
+        statusCode: 500,
+        message: request.error.message,
+        expose: true,
+      } as HttpError;
     }
 
-    request.error = new createHttpError.InternalServerError(
-      request.error.message
-    );
+    const { statusCode, message, headers } = request.error as HttpError;
+    request.response = {
+      ...request.response,
+      statusCode:
+        statusCode && [400, 404, 415, 422].includes(statusCode)
+          ? statusCode
+          : 500,
+      body: JSON.stringify({ message }),
+      headers: {
+        ...headers,
+        ...(request.response ? request.response.headers : {}),
+        "Content-Type": "application/json",
+      },
+    };
   };
   return { onError };
 };

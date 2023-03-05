@@ -48,6 +48,15 @@ jest.mock("aws-sdk", () => {
               }),
             };
           }),
+          transactWrite: jest.fn(({ TransactItems }) => {
+            return {
+              promise: jest.fn(() => {
+                return TransactItems[1].Put.Item.count === 100501
+                  ? Promise.reject({ message: "rejected 100501" })
+                  : Promise.resolve();
+              }),
+            };
+          }),
         };
       }),
     },
