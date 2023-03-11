@@ -5,7 +5,7 @@ import {
   getProductsList,
   createProduct,
 } from "@functions/index";
-import { REGION } from "src/constants";
+import { REGION } from "@common/constants";
 
 const serverlessConfiguration: AWS = {
   service: "product-service",
@@ -46,7 +46,6 @@ const serverlessConfiguration: AWS = {
       },
     },
   },
-  // import the function via paths
   functions: {
     getProductsList,
     getProductById,

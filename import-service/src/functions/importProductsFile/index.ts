@@ -1,6 +1,6 @@
 import { FunctionType } from "@common/types";
 import { handlerPath } from "@common/libs/handler-resolver";
-import { environment } from "@common/constants";
+// import { environment } from "src/constants";
 
 const config: FunctionType = {
   handler: `${handlerPath(__dirname)}/handler.main`,
@@ -8,11 +8,20 @@ const config: FunctionType = {
     {
       http: {
         method: "get",
-        path: "products",
+        path: "import",
+        request: {
+          parameters: {
+            querystrings: {
+              name: {
+                required: true,
+              },
+            },
+          },
+        },
       },
     },
   ],
-  environment,
+  // environment,
 };
 
 export default config;

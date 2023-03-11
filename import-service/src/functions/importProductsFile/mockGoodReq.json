@@ -1,0 +1,9 @@
+{
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "httpMethod": "GET",
+  "queryStringParameters": {
+    "name": "file1.csv"
+  }
+}

@@ -1,6 +1,6 @@
 import middy from "@middy/core";
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda";
-import createHttpError, { HttpError, isHttpError } from "http-errors";
+import { HttpError, isHttpError } from "http-errors";
 
 const errorHandler = (): middy.MiddlewareObj<
   APIGatewayProxyEvent,
