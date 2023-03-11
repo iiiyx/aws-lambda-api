@@ -1,21 +1,26 @@
 import { APIGatewayProxyEvent, Context } from "aws-lambda";
+import { environment } from "src/constants";
+import mockProducts from "../../mocks/products.json";
 import { main as handler } from "./handler";
-import productListMock from "../../mocks/products.json";
 
-jest.mock("@libs/lambda");
 describe("Get Product By ID", function () {
+  beforeEach(() => {
+    jest.resetModules(); // Most important - it clears the cache
+    process.env = { ...process.env, ...environment }; // Make a copy
+  });
+
   it("verifies successful response", async () => {
-    const { id } = productListMock[1];
+    const product = mockProducts[1];
     const event: APIGatewayProxyEvent = {
       pathParameters: {
-        productId: id,
+        productId: product.id,
       },
     } as any;
     const result = await handler(event, {} as Context);
 
-    expect(result.statusCode).toEqual(200);
-    expect(result.body).toEqual(JSON.stringify(productListMock[1]));
+    expect(result).toEqual({ ...product, count: 100500 });
   });
+
   it("verifies unsuccessful response", async () => {
     const id = "some-fake-id";
     const event: APIGatewayProxyEvent = {
@@ -23,11 +28,14 @@ describe("Get Product By ID", function () {
         productId: id,
       },
     } as any;
-    const result = await handler(event, {} as Context);
-
-    expect(result.statusCode).toEqual(404);
-    expect(result.body).toEqual(
-      JSON.stringify({ message: `Product with id '${id}' is not found` })
-    );
+    let caught = false;
+    try {
+      await handler(event, {} as Context);
+    } catch (e) {
+      expect(e.message).toEqual(`Product with id '${id}' is not found`);
+      expect(e.statusCode).toEqual(404);
+      caught = true;
+    }
+    expect(caught).toBeTruthy();
   });
 });

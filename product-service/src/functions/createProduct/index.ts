@@ -7,7 +7,7 @@ const config: FunctionType = {
   events: [
     {
       http: {
-        method: "get",
+        method: "post",
         path: "products",
       },
     },

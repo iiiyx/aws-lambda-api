@@ -16,7 +16,7 @@
           "type": "string"
         },
         "count": {
-          "description": "Product's count",
+          "description": "Product's stock count",
           "type": "number"
         },
         "description": {
@@ -31,7 +31,8 @@
           "description": "The name of a product",
           "type": "string"
         }
-      }
+      },
+      "required": ["id", "title", "description", "price", "count"]
     }
   }
 }

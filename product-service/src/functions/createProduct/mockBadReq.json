@@ -1,0 +1,7 @@
+{
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "httpMethod": "POST",
+  "body": "{\"not_a_count\": 5, \"price\": 10.99, \"description\": \"In a mad and sublime utopian world, take part in explosive encounters. Adapt your fighting style to each opponent, use your environment and upgrade your equipment to fulfill your mission. If you want to reach the truth, you'll have to pay in blood.\",\"title\":\"Atomic Heart\"}"
+}

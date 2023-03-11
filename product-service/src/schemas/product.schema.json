@@ -25,5 +25,6 @@
       "description": "The name of a product",
       "type": "string"
     }
-  }
+  },
+  "required": ["id", "title", "description", "price", "count"]
 }

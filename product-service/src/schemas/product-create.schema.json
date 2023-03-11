@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.com/product-create.schema.json",
+  "title": "Create Product",
+  "description": "The details of the product",
+  "type": "object",
+  "properties": {
+    "count": {
+      "description": "Product's count",
+      "type": "number"
+    },
+    "description": {
+      "description": "Product's description",
+      "type": "string"
+    },
+    "price": {
+      "description": "Product's price",
+      "type": "number"
+    },
+    "title": {
+      "description": "The name of a product",
+      "type": "string"
+    }
+  },
+  "required": ["title", "description", "price", "count"]
+}
