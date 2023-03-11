@@ -11,7 +11,8 @@
     "local-get-list": "serverless invoke local -f getProductsList --path src/functions/getProductsList/mockReq.json",
     "local-get-by-id-200": "serverless invoke local -f getProductById --path src/functions/getProductById/mockGoodReq.json",
     "local-get-by-id-404": "serverless invoke local -f getProductById --path src/functions/getProductById/mockBadReq.json",
-    "local-create": "serverless invoke local -f createProduct --path src/functions/createProduct/mockReq.json"
+    "local-create-200": "serverless invoke local -f createProduct --path src/functions/createProduct/mockGoodReq.json",
+    "local-create-400": "serverless invoke local -f createProduct --path src/functions/createProduct/mockBadReq.json"
   },
   "engines": {
     "node": ">=14.15.0"

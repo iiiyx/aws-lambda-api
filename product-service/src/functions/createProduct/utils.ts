@@ -1,8 +1,9 @@
 import { APIGatewayEvent } from "aws-lambda";
+import { randomUUID } from "crypto";
 import createHttpError from "http-errors";
 import { Draft, Draft07, JSONError } from "json-schema-library";
 import { ProductWithStockType } from "src/models";
-import productSchema from "src/schemas/product.schema.json";
+import productSchema from "src/schemas/product-create.schema.json";
 
 export const parseInput = (event: APIGatewayEvent): ProductWithStockType => {
   const mimePattern = /^application\/(.+\+)?json($|;.+)/;
@@ -33,5 +34,5 @@ export const parseInput = (event: APIGatewayEvent): ProductWithStockType => {
     throw createHttpError(400, ...errors);
   }
 
-  return productWithStock;
+  return { ...productWithStock, id: randomUUID() };
 };

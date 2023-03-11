@@ -1,6 +1,7 @@
 import { APIGatewayProxyEvent, Context } from "aws-lambda";
 import { environment } from "src/constants";
-import req from "./mockReq.json";
+import mockGoodReq from "./mockGoodReq.json";
+import mockBadReq from "./mockBadReq.json";
 import { main as handler } from "./handler";
 
 describe("Create Product", function () {
@@ -11,9 +12,9 @@ describe("Create Product", function () {
 
   it("verifies content type error", async () => {
     const event: APIGatewayProxyEvent = {
-      ...req,
+      ...mockGoodReq,
       headers: {
-        ...req.headers,
+        ...mockGoodReq.headers,
       },
     } as unknown as APIGatewayProxyEvent;
     delete event.headers["Content-Type"];
@@ -30,9 +31,9 @@ describe("Create Product", function () {
 
   it("verifies validation error", async () => {
     const event: APIGatewayProxyEvent = {
-      ...req,
+      ...mockBadReq,
       headers: {
-        ...req.headers,
+        ...mockBadReq.headers,
       },
     } as unknown as APIGatewayProxyEvent;
     let caught = false;
@@ -50,9 +51,9 @@ describe("Create Product", function () {
 
   it("verifies transaction error", async () => {
     const event: APIGatewayProxyEvent = {
-      ...req,
+      ...mockGoodReq,
       headers: {
-        ...req.headers,
+        ...mockGoodReq.headers,
       },
     } as unknown as APIGatewayProxyEvent;
     const item = { ...JSON.parse(event.body), count: 100501 };
@@ -70,9 +71,9 @@ describe("Create Product", function () {
 
   it("verifies successful response", async () => {
     const event: APIGatewayProxyEvent = {
-      ...req,
+      ...mockGoodReq,
       headers: {
-        ...req.headers,
+        ...mockGoodReq.headers,
       },
     } as unknown as APIGatewayProxyEvent;
     const item = { ...JSON.parse(event.body), count: 100500 };
