@@ -8,7 +8,8 @@
     "info": "serverless info",
     "remove": "serverless remove",
     "test": "jest",
-    "local-import": "serverless invoke local -f importProductsFile --path src/functions/importProductsFile/mockGoodReq.json"
+    "local-import": "serverless invoke local -f importProductsFile --path src/functions/importProductsFile/mockGoodReq.json",
+    "local-parse": "serverless invoke local -f importFileParser --path src/functions/importFileParser/mockS3Event.json"
   },
   "engines": {
     "node": ">=14.15.0"
@@ -16,7 +17,8 @@
   "dependencies": {
     "@middy/core": "^3.4.0",
     "@middy/http-cors": "^4.2.6",
-    "aws-sdk": "^2.1328.0"
+    "aws-sdk": "^2.1328.0",
+    "csv-parser": "^3.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.21.0",
