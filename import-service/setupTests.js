@@ -6,15 +6,17 @@ jest.mock("aws-sdk", () => {
     },
     S3: jest.fn(() => {
       return {
-        getObject: jest.fn((params) => {
-          return {
-            promise: jest.fn(() => {
-              // if params.Key === ??? then reject
-              return Promise.resolve({
-                ...params,
-              });
-            }),
-          };
+        getSignedUrlPromise: jest.fn((action, params) => {
+          if (params.Key.endsWith("error.csv")) {
+            return Promise.reject({
+              action,
+              ...params,
+            });
+          }
+          return Promise.resolve({
+            action,
+            ...params,
+          });
         }),
       };
     }),

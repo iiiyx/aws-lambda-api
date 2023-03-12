@@ -1,7 +1,7 @@
 import type { AWS } from "@serverless/typescript";
 
 import { importProductsFile } from "@functions/index";
-import { BUCKET, UPLOAD_PATH } from "@common/constants";
+import { BUCKET, REGION, UPLOAD_PATH } from "@common/constants";
 
 const serverlessConfiguration: AWS = {
   service: "import-service",
@@ -10,6 +10,7 @@ const serverlessConfiguration: AWS = {
   provider: {
     name: "aws",
     runtime: "nodejs16.x",
+    region: REGION,
     stage: "dev",
     apiGateway: {
       minimumCompressionSize: 1024,
@@ -20,7 +21,7 @@ const serverlessConfiguration: AWS = {
         statements: [
           {
             Effect: "Allow",
-            Action: ["s3:GetObject"],
+            Action: ["s3:GetObject", "s3:PutObject"],
             Resource: [`arn:aws:s3:::${BUCKET}/${UPLOAD_PATH}/*`],
           },
         ],
