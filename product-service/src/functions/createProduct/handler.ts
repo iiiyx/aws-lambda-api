@@ -1,7 +1,7 @@
-import { middyfy } from "@libs/lambda";
+import { middyfy } from "@common/libs/lambda";
 import { APIGatewayEvent } from "aws-lambda";
 import * as AWS from "aws-sdk";
-import { REGION, TableNames } from "src/constants";
+import { REGION, TableNames } from "@common/constants";
 import { ProductWithStockType, StockType } from "src/models";
 import { parseInput } from "./utils";
 

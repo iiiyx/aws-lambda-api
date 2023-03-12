@@ -1,6 +1,6 @@
 import middy from "@middy/core";
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda";
-import createHttpError, { HttpError, isHttpError } from "http-errors";
+import { HttpError, isHttpError } from "http-errors";
 
 const errorHandler = (): middy.MiddlewareObj<
   APIGatewayProxyEvent,
@@ -10,6 +10,8 @@ const errorHandler = (): middy.MiddlewareObj<
     APIGatewayProxyEvent,
     APIGatewayProxyResult
   > = async (request): Promise<void> => {
+    console.error(request);
+
     if (!isHttpError(request.error) || !request.error.statusCode) {
       request.error = {
         statusCode: 500,
