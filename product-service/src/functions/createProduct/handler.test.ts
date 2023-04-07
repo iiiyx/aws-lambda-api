@@ -1,5 +1,5 @@
 import { APIGatewayProxyEvent, Context } from "aws-lambda";
-import { environment } from "src/constants";
+import { environment } from "@common/constants";
 import mockGoodReq from "./mockGoodReq.json";
 import mockBadReq from "./mockBadReq.json";
 import { main as handler } from "./handler";

@@ -5,7 +5,7 @@ const mockProductsWithStock = mockProducts.map((p) => ({
   count: 100500,
 }));
 
-jest.mock("@libs/lambda");
+jest.mock("@common/libs/lambda");
 jest.mock("aws-sdk", () => {
   return {
     config: {

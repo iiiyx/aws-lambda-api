@@ -1,27 +1,20 @@
 import type { AWS } from "@serverless/typescript";
 
-import {
-  getProductById,
-  getProductsList,
-  createProduct,
-} from "@functions/index";
-import { REGION } from "@common/constants";
+import { importProductsFile, importFileParser } from "@functions/index";
+import { BUCKET, PARSED_PATH, REGION, UPLOAD_PATH } from "@common/constants";
 
 const serverlessConfiguration: AWS = {
-  service: "product-service",
+  service: "import-service",
   frameworkVersion: "3",
   plugins: ["serverless-esbuild"],
   provider: {
     name: "aws",
     runtime: "nodejs16.x",
     region: REGION,
+    stage: "dev",
     apiGateway: {
       minimumCompressionSize: 1024,
       shouldStartNameWithService: true,
-    },
-    environment: {
-      AWS_NODEJS_CONNECTION_REUSE_ENABLED: "1",
-      NODE_OPTIONS: "--enable-source-maps --stack-trace-limit=1000",
     },
     iam: {
       role: {
@@ -29,28 +22,27 @@ const serverlessConfiguration: AWS = {
           {
             Effect: "Allow",
             Action: [
-              "dynamodb:DescribeTable",
-              "dynamodb:Query",
-              "dynamodb:Scan",
-              "dynamodb:GetItem",
-              "dynamodb:PutItem",
-              "dynamodb:UpdateItem",
-              "dynamodb:DeleteItem",
+              "s3:GetObject",
+              "s3:PutObject",
+              "s3:DeleteObject",
+              "s3:CopyObject",
             ],
-            Resource: [
-              "arn:aws:dynamodb:eu-west-1:651074625988:table/products",
-              "arn:aws:dynamodb:eu-west-1:651074625988:table/stocks",
-            ],
+            Resource: [`arn:aws:s3:::${BUCKET}/${UPLOAD_PATH}/*`],
+          },
+          {
+            Effect: "Allow",
+            Action: ["s3:GetObject", "s3:PutObject", "s3:CopyObject"],
+            Resource: [`arn:aws:s3:::${BUCKET}/${PARSED_PATH}/*`],
           },
         ],
       },
     },
+    environment: {
+      AWS_NODEJS_CONNECTION_REUSE_ENABLED: "1",
+      NODE_OPTIONS: "--enable-source-maps --stack-trace-limit=1000",
+    },
   },
-  functions: {
-    getProductsList,
-    getProductById,
-    createProduct,
-  },
+  functions: { importProductsFile, importFileParser },
   package: { individually: true },
   custom: {
     esbuild: {

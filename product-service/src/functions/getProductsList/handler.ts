@@ -1,7 +1,7 @@
-import { middyfy } from "@libs/lambda";
+import { middyfy } from "@common/libs/lambda";
 import { APIGatewayEvent } from "aws-lambda";
 import * as AWS from "aws-sdk";
-import { REGION } from "src/constants";
+import { REGION } from "@common/constants";
 import { ProductType, ProductWithStockType, StockType } from "src/models";
 
 AWS.config.update({ region: REGION });

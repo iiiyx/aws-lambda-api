@@ -1,18 +1,23 @@
 import { FunctionType } from "@common/types";
 import { handlerPath } from "@common/libs/handler-resolver";
-import { environment } from "@common/constants";
+import { BUCKET, UPLOAD_PATH } from "@common/constants";
 
 const config: FunctionType = {
   handler: `${handlerPath(__dirname)}/handler.main`,
   events: [
     {
-      http: {
-        method: "get",
-        path: "products",
+      s3: {
+        bucket: BUCKET,
+        event: "s3:ObjectCreated:*",
+        rules: [
+          {
+            prefix: `${UPLOAD_PATH}/`,
+          },
+        ],
+        existing: true,
       },
     },
   ],
-  environment,
 };
 
 export default config;
