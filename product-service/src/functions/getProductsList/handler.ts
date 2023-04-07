@@ -2,7 +2,7 @@ import { middyfy } from "@common/libs/lambda";
 import { APIGatewayEvent } from "aws-lambda";
 import * as AWS from "aws-sdk";
 import { REGION } from "@common/constants";
-import { ProductType, ProductWithStockType, StockType } from "src/models";
+import { ProductType, ProductWithStockType, StockType } from "@common/models";
 
 AWS.config.update({ region: REGION });
 const ddb = new AWS.DynamoDB.DocumentClient();

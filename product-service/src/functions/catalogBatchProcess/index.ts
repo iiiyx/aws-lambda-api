@@ -1,0 +1,20 @@
+import { FunctionType } from "@common/types";
+import { handlerPath } from "@common/libs/handler-resolver";
+import { environment } from "@common/constants";
+
+const config: FunctionType = {
+  handler: `${handlerPath(__dirname)}/handler.main`,
+  events: [
+    {
+      sqs: {
+        batchSize: 5,
+        arn: {
+          "Fn::GetAtt": ["SQSQueue", "Arn"],
+        },
+      },
+    },
+  ],
+  environment,
+};
+
+export default config;

@@ -34,12 +34,18 @@ const serverlessConfiguration: AWS = {
             Action: ["s3:GetObject", "s3:PutObject", "s3:CopyObject"],
             Resource: [`arn:aws:s3:::${BUCKET}/${PARSED_PATH}/*`],
           },
+          {
+            Effect: "Allow",
+            Action: "sqs:*",
+            Resource: ["${cf:product-service-dev.SQSQueueArn}"],
+          },
         ],
       },
     },
     environment: {
       AWS_NODEJS_CONNECTION_REUSE_ENABLED: "1",
       NODE_OPTIONS: "--enable-source-maps --stack-trace-limit=1000",
+      SQS_URL: "${cf:product-service-dev.SQSQueue}",
     },
   },
   functions: { importProductsFile, importFileParser },
