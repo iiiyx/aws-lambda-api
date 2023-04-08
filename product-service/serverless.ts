@@ -26,6 +26,9 @@ const serverlessConfiguration: AWS = {
       SQS_URL: {
         Ref: "SQSQueue",
       },
+      SNS_ARN: {
+        Ref: "SNSTopic",
+      },
     },
     iam: {
       role: {
@@ -55,6 +58,15 @@ const serverlessConfiguration: AWS = {
               },
             ],
           },
+          {
+            Effect: "Allow",
+            Action: "sns:*",
+            Resource: [
+              {
+                Ref: "SNSTopic",
+              },
+            ],
+          },
         ],
       },
     },
@@ -71,6 +83,35 @@ const serverlessConfiguration: AWS = {
         Type: "AWS::SQS::Queue",
         Properties: {
           QueueName: "catalogItemsQueue",
+        },
+      },
+      SNSTopic: {
+        Type: "AWS::SNS::Topic",
+        Properties: {
+          TopicName: "createProductTopic",
+        },
+      },
+      SNSSubscription: {
+        Type: "AWS::SNS::Subscription",
+        Properties: {
+          Endpoint: "oleg_sobolev@epam.com",
+          Protocol: "email",
+          TopicArn: {
+            Ref: "SNSTopic",
+          },
+        },
+      },
+      SNSFilteredSubscription: {
+        Type: "AWS::SNS::Subscription",
+        Properties: {
+          Endpoint: "o.l.sobolev@gmail.com",
+          Protocol: "email",
+          TopicArn: {
+            Ref: "SNSTopic",
+          },
+          FilterPolicy: {
+            hasCheap: ["true"],
+          },
         },
       },
     },

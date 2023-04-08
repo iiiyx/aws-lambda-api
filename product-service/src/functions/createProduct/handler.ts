@@ -7,11 +7,28 @@ import { parseInput } from "./utils";
 
 AWS.config.update({ region: REGION });
 const ddb = new AWS.DynamoDB.DocumentClient();
+const sns = new AWS.SNS({ region: REGION });
 
 const handler = async (event: APIGatewayEvent): Promise<string> => {
   const productWithStock: ProductWithStockType = parseInput(event);
 
   await saveProduct(productWithStock);
+
+  const isCheap = productWithStock.price <= 10;
+
+  await sns
+    .publish({
+      Subject: "New product added",
+      Message: JSON.stringify(productWithStock, null, 2),
+      TopicArn: process.env.SNS_ARN,
+      MessageAttributes: {
+        hasCheap: {
+          DataType: "String",
+          StringValue: String(isCheap),
+        },
+      },
+    })
+    .promise();
 
   return "success";
 };

@@ -11,6 +11,12 @@ const config: FunctionType = {
         path: "products",
       },
     },
+    {
+      http: {
+        method: "options",
+        path: "products",
+      },
+    },
   ],
   environment,
 };

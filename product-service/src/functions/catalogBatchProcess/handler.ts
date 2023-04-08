@@ -1,24 +1,46 @@
-import { middyfy } from "@common/libs/lambda";
 import { SQSEvent } from "aws-lambda";
 import * as AWS from "aws-sdk";
 import { REGION } from "@common/constants";
 import { ProductType, ProductWithStockType, StockType } from "@common/models";
 
-AWS.config.update({ region: REGION });
-const ddb = new AWS.DynamoDB.DocumentClient();
+const ddb = new AWS.DynamoDB.DocumentClient({ region: REGION });
+const sns = new AWS.SNS({ region: REGION });
 
-const handler = async (_event: SQSEvent) => {
+const handler = async (_event: SQSEvent): Promise<string> => {
   const products: ProductWithStockType[] = _event.Records.map(({ body }) => {
-    return JSON.parse(body) as ProductWithStockType;
+    return JSON.parse(body);
   });
-  saveProducts(products);
+  await saveProducts(products);
+  const hasCheap = products.some((p) => p.price <= 10);
+  await publishMsg(
+    "New products added",
+    JSON.stringify(products, null, 2),
+    hasCheap
+  );
+  return "success";
 };
+
+function publishMsg(subject: string, msg: string, hasCheap: boolean) {
+  return sns
+    .publish({
+      Subject: subject,
+      Message: msg,
+      TopicArn: process.env.SNS_ARN,
+      MessageAttributes: {
+        hasCheap: {
+          DataType: "String",
+          StringValue: String(hasCheap),
+        },
+      },
+    })
+    .promise();
+}
 
 export async function saveProducts(productWithStock: ProductWithStockType[]) {
   const products: ProductType[] = productWithStock.map((ps) => {
     const p = { ...ps };
     delete p.count;
-    return p as ProductType;
+    return p;
   });
 
   const stocks: StockType[] = productWithStock.map((ps) => {
@@ -51,11 +73,7 @@ export async function saveProducts(productWithStock: ProductWithStockType[]) {
     ],
   };
 
-  try {
-    await ddb.transactWrite(params).promise();
-  } catch (e) {
-    console.error(e);
-  }
+  await ddb.transactWrite(params).promise();
 }
 
-export const main = middyfy(handler);
+export const main = handler;
