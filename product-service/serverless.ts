@@ -4,8 +4,9 @@ import {
   getProductById,
   getProductsList,
   createProduct,
+  catalogBatchProcess,
 } from "@functions/index";
-import { REGION } from "@common/constants";
+import { REGION, TableNames } from "@common/constants";
 
 const serverlessConfiguration: AWS = {
   service: "product-service",
@@ -22,6 +23,12 @@ const serverlessConfiguration: AWS = {
     environment: {
       AWS_NODEJS_CONNECTION_REUSE_ENABLED: "1",
       NODE_OPTIONS: "--enable-source-maps --stack-trace-limit=1000",
+      SQS_URL: {
+        Ref: "SQSQueue",
+      },
+      SNS_ARN: {
+        Ref: "SNSTopic",
+      },
     },
     iam: {
       role: {
@@ -38,8 +45,26 @@ const serverlessConfiguration: AWS = {
               "dynamodb:DeleteItem",
             ],
             Resource: [
-              "arn:aws:dynamodb:eu-west-1:651074625988:table/products",
-              "arn:aws:dynamodb:eu-west-1:651074625988:table/stocks",
+              `arn:aws:dynamodb:eu-west-1:651074625988:table/${TableNames.PRODUCTS}`,
+              `arn:aws:dynamodb:eu-west-1:651074625988:table/${TableNames.STOCKS}`,
+            ],
+          },
+          {
+            Effect: "Allow",
+            Action: "sqs:*",
+            Resource: [
+              {
+                "Fn::GetAtt": ["SQSQueue", "Arn"],
+              },
+            ],
+          },
+          {
+            Effect: "Allow",
+            Action: "sns:*",
+            Resource: [
+              {
+                Ref: "SNSTopic",
+              },
             ],
           },
         ],
@@ -50,6 +75,58 @@ const serverlessConfiguration: AWS = {
     getProductsList,
     getProductById,
     createProduct,
+    catalogBatchProcess,
+  },
+  resources: {
+    Resources: {
+      SQSQueue: {
+        Type: "AWS::SQS::Queue",
+        Properties: {
+          QueueName: "catalogItemsQueue",
+        },
+      },
+      SNSTopic: {
+        Type: "AWS::SNS::Topic",
+        Properties: {
+          TopicName: "createProductTopic",
+        },
+      },
+      SNSSubscription: {
+        Type: "AWS::SNS::Subscription",
+        Properties: {
+          Endpoint: "oleg_sobolev@epam.com",
+          Protocol: "email",
+          TopicArn: {
+            Ref: "SNSTopic",
+          },
+        },
+      },
+      SNSFilteredSubscription: {
+        Type: "AWS::SNS::Subscription",
+        Properties: {
+          Endpoint: "o.l.sobolev@gmail.com",
+          Protocol: "email",
+          TopicArn: {
+            Ref: "SNSTopic",
+          },
+          FilterPolicy: {
+            hasCheap: ["true"],
+          },
+        },
+      },
+    },
+    Outputs: {
+      SQSQueue: {
+        Value: {
+          Ref: "SQSQueue",
+        },
+      },
+      SQSQueueArn: {
+        Value: {
+          "Fn::GetAtt": ["SQSQueue", "Arn"],
+        },
+      },
+    },
   },
   package: { individually: true },
   custom: {

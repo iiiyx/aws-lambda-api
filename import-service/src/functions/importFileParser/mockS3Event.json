@@ -6,7 +6,7 @@
           "name": "js-cc-shop-uploaded-osob"
         },
         "object": {
-          "key": "uploaded/catalog.csv"
+          "key": "parsed/catalog.csv"
         }
       }
     }

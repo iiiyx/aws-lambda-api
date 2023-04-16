@@ -6,7 +6,7 @@ import logger from "../middlewares/logger";
 
 export const middyfy = (handler) => {
   return middy(handler)
-    .use(cors())
+    .use(cors({ disableBeforePreflightResponse: false }))
     .use(jsonEncoder())
     .use(errorHandler())
     .use(logger());

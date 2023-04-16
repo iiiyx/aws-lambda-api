@@ -1,12 +1,14 @@
 import { S3Event, S3EventRecord } from "aws-lambda";
 import * as AWS from "aws-sdk";
 import csvParser from "csv-parser";
+import { randomUUID } from "crypto";
 import middy from "@middy/core";
 import errorHandler from "@common/middlewares/error-handler";
 import jsonEncoder from "@common/middlewares/json-encoder";
-
+import { ProductWithStockType } from "@common/models";
 import { REGION, UPLOAD_PATH, PARSED_PATH } from "@common/constants";
 
+// TODO: remove it
 AWS.config.update({ region: REGION });
 
 export type AwsS3GetSignedUrlParamsType = {
@@ -18,8 +20,10 @@ export type AwsS3GetSignedUrlParamsType = {
 
 const handler = async (event: S3Event): Promise<string> => {
   const s3 = new AWS.S3({ region: REGION });
+  const sqs = new AWS.SQS({ region: REGION });
   const maxParsed = event.Records.length;
-  let parsed = 0;
+  let parsedFilesCount = 0;
+  const products: ProductWithStockType[] = [];
   return new Promise((resolve, reject) => {
     for (const record of event.Records) {
       parseRecord(record);
@@ -43,10 +47,34 @@ const handler = async (event: S3Event): Promise<string> => {
         .createReadStream()
         .pipe(csvParser({ separator: ";" }))
         .on("error", reject)
-        .on("data", console.log)
-        .on("end", onParsed);
+        .on("data", onData)
+        .on("end", onEnd);
 
-      async function onParsed() {
+      function onData(product: ProductWithStockType) {
+        const readyProd = {
+          ...product,
+          price: +product.price,
+          count: +product.count,
+          id: randomUUID(),
+        };
+        products.push(readyProd);
+      }
+
+      async function onEnd() {
+        products.map((p) => {
+          sqs.sendMessage(
+            {
+              QueueUrl: process.env.SQS_URL,
+              MessageBody: JSON.stringify(p),
+            },
+            (error) => {
+              if (error) {
+                console.error(error);
+              }
+            }
+          );
+        });
+
         await s3
           .copyObject(
             {
@@ -71,8 +99,8 @@ const handler = async (event: S3Event): Promise<string> => {
             console.error(err);
             reject(err);
           } else {
-            parsed++;
-            if (parsed === maxParsed) {
+            parsedFilesCount++;
+            if (parsedFilesCount === maxParsed) {
               resolve("success");
             }
           }

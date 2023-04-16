@@ -2,7 +2,7 @@ import { APIGatewayEvent } from "aws-lambda";
 import { randomUUID } from "crypto";
 import createHttpError from "http-errors";
 import { Draft, Draft07, JSONError } from "json-schema-library";
-import { ProductWithStockType } from "src/models";
+import { ProductType, ProductWithStockType, StockType } from "@common/models";
 import productSchema from "src/schemas/product-create.schema.json";
 
 export const parseInput = (event: APIGatewayEvent): ProductWithStockType => {

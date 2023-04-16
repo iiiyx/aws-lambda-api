@@ -1,4 +1,5 @@
 import mockProducts from "./src/mocks/products.json";
+import { mockDynamoInstance, mockSNSInstance } from "./src/mocks/aws";
 
 const mockProductsWithStock = mockProducts.map((p) => ({
   ...p,
@@ -48,17 +49,10 @@ jest.mock("aws-sdk", () => {
               }),
             };
           }),
-          transactWrite: jest.fn(({ TransactItems }) => {
-            return {
-              promise: jest.fn(() => {
-                return TransactItems[1].Put.Item.count === 100501
-                  ? Promise.reject({ message: "rejected 100501" })
-                  : Promise.resolve();
-              }),
-            };
-          }),
+          ...mockDynamoInstance,
         };
       }),
     },
+    SNS: jest.fn(() => mockSNSInstance),
   };
 });

@@ -6,15 +6,11 @@ const config: FunctionType = {
   handler: `${handlerPath(__dirname)}/handler.main`,
   events: [
     {
-      http: {
-        method: "post",
-        path: "products",
-      },
-    },
-    {
-      http: {
-        method: "options",
-        path: "products",
+      sqs: {
+        batchSize: 5,
+        arn: {
+          "Fn::GetAtt": ["SQSQueue", "Arn"],
+        },
       },
     },
   ],
