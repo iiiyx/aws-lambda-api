@@ -12,3 +12,5 @@ export const environment = {
   PRODUCTS_TABLE: TableNames.PRODUCTS,
   STOCKS_TABLE: TableNames.STOCKS,
 };
+
+export const STAGE = "dev";
