@@ -9,6 +9,7 @@ const config: FunctionType = {
       http: {
         method: "get",
         path: "import",
+        cors: true,
         request: {
           parameters: {
             querystrings: {
