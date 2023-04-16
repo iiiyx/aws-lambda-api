@@ -6,7 +6,8 @@
   "scripts": {
     "deploy": "serverless deploy",
     "info": "serverless info",
-    "remove": "serverless remove"
+    "remove": "serverless remove",
+    "local-invoke": "serverless invoke local -f basicAuthorizer --path src/functions/basicAuthorizer/mockGoodReq.json"
   },
   "engines": {
     "node": ">=16.0.0"

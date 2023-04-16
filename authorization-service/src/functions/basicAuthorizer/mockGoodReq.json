@@ -1,0 +1,7 @@
+{
+  "httpMethod": "GET",
+  "queryStringParameters": {
+    "name": "catalog.csv"
+  },
+  "authorizationToken": "Basic aWlpeXg6VEVTVF9QQVNTV09SRA=="
+}

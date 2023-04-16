@@ -36,23 +36,26 @@ const handler = async (
       const policy = generatePolicy(null, event.methodArn, "Deny");
 
       cb(null, policy);
+      return;
     }
 
     const [username, password] = Buffer.from(token, "base64")
       .toString("utf-8")
       .split(":");
 
-    if (process.env[username] !== password) {
+    if (!username || !password || process.env[username] !== password) {
       const policy = generatePolicy(username, event.methodArn, "Deny");
 
       cb(null, policy);
+      return;
     }
 
     const policy = generatePolicy(username, event.methodArn, "Allow");
 
     cb(null, policy);
   } catch (e) {
-    cb("Unauthorized:", e.message);
+    const policy = generatePolicy(null, event.methodArn, "Deny");
+    cb("Unauthorized: " + e.message, policy);
   }
 };
 
