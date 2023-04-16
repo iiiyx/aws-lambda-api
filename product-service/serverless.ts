@@ -6,7 +6,7 @@ import {
   createProduct,
   catalogBatchProcess,
 } from "@functions/index";
-import { REGION, TableNames } from "@common/constants";
+import { REGION, STAGE, TableNames } from "@common/constants";
 
 const serverlessConfiguration: AWS = {
   service: "product-service",
@@ -16,6 +16,7 @@ const serverlessConfiguration: AWS = {
     name: "aws",
     runtime: "nodejs16.x",
     region: REGION,
+    stage: STAGE,
     apiGateway: {
       minimumCompressionSize: 1024,
       shouldStartNameWithService: true,

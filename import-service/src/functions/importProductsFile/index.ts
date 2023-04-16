@@ -1,5 +1,6 @@
 import { FunctionType } from "@common/types";
 import { handlerPath } from "@common/libs/handler-resolver";
+import { REGION, STAGE } from "@common/constants";
 
 const config: FunctionType = {
   handler: `${handlerPath(__dirname)}/handler.main`,
@@ -8,6 +9,7 @@ const config: FunctionType = {
       http: {
         method: "get",
         path: "import",
+        cors: true,
         request: {
           parameters: {
             querystrings: {
@@ -16,6 +18,15 @@ const config: FunctionType = {
               },
             },
           },
+        },
+        authorizer: {
+          arn: {
+            "Fn::Sub": `arn:aws:lambda:${REGION}:\${AWS::AccountId}:function:authorization-service-${STAGE}-basicAuthorizer`,
+          },
+          name: "basicAuthorizer",
+          resultTtlInSeconds: 0,
+          identitySource: "method.request.header.Authorization",
+          type: "token",
         },
       },
     },

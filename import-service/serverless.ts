@@ -1,7 +1,13 @@
 import type { AWS } from "@serverless/typescript";
 
 import { importProductsFile, importFileParser } from "@functions/index";
-import { BUCKET, PARSED_PATH, REGION, UPLOAD_PATH } from "@common/constants";
+import {
+  BUCKET,
+  PARSED_PATH,
+  REGION,
+  STAGE,
+  UPLOAD_PATH,
+} from "@common/constants";
 
 const serverlessConfiguration: AWS = {
   service: "import-service",
@@ -11,7 +17,7 @@ const serverlessConfiguration: AWS = {
     name: "aws",
     runtime: "nodejs16.x",
     region: REGION,
-    stage: "dev",
+    stage: STAGE,
     apiGateway: {
       minimumCompressionSize: 1024,
       shouldStartNameWithService: true,
@@ -48,8 +54,28 @@ const serverlessConfiguration: AWS = {
       SQS_URL: "${cf:product-service-dev.SQSQueue}",
     },
   },
-  functions: { importProductsFile, importFileParser },
+  functions: {
+    importProductsFile,
+    importFileParser,
+  },
   package: { individually: true },
+  resources: {
+    Resources: {
+      GatewayResponse: {
+        Type: "AWS::ApiGateway::GatewayResponse",
+        Properties: {
+          ResponseParameters: {
+            "gatewayresponse.header.Access-Control-Allow-Origin": "'*'",
+            "gatewayresponse.header.Access-Control-Allow-Headers": "'*'",
+          },
+          ResponseType: "DEFAULT_4XX",
+          RestApiId: {
+            Ref: "ApiGatewayRestApi",
+          },
+        },
+      },
+    },
+  },
   custom: {
     esbuild: {
       bundle: true,
